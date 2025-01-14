@@ -1,0 +1,19 @@
+# Создание записей Buyer  
+Buyer.objects.create(name='Pavel', balance=100.00, age=19) 
+Buyer.objects.create(name='Victor', balance=98.00, age=16) 
+Buyer.objects.create(name='Anton', balance=320.00, age=28) 
+  
+# Создание записей Game  
+Game.objects.create(title='Haak', cost=30.00, size=1.6, description='Exciting adventure game.', age_limited=True)
+ 
+Game.objects.create(title='Mario', cost=15.00, size=0.5, description='Old game.', age_limited=False)  # Без ограничения 
+ 
+Game.objects.create(title='Cyberpunk 2077', cost=55, size=46, description='Game of the year.', age_limited=True) 
+  
+# Связывание покупателей с играми  
+second_buyer = Buyer.objects.get(age__lt=18)  
+first_buyer, third_buyer = Buyer.objects.filter(age__gt=18)
+
+Game.objects.get(id=1).buyer.set((first_buyer, third_buyer))  
+Game.objects.get(id=4).buyer.set((first_buyer, second_buyer, third_buyer)) 
+Game.objects.get(id=3).buyer.set([third_buyer])
