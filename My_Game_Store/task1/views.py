@@ -1,6 +1,7 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from .forms import UserRegister
-from .models import Buyer, Game
+from .models import Buyer, Game, News
 
 # Create your views here.
 def main(request):
@@ -15,6 +16,12 @@ def cart(request):
     cart_items = request.session.get('cart', [])
     return render(request, 'fourth_task/cart.html', {'cart_items': cart_items})
 
+def news(request):
+    news_list = News.objects.all().order_by('-date')
+    paginator = Paginator(news_list, 5)
+    page_number = request.GET.get('page')
+    news_page = paginator.get_page(page_number)
+    return render(request, 'blog/news.html', {'news': news_page})
 
 users = ['Danil', 'Pavel', 'Anton']
 
